@@ -1,21 +1,7 @@
 #Windows Azure Active Directory Binding Example for Objective-C for Xamarin
 
 
-This sample shows how to build a Xamarin binding to our native ADAL for iOS library. This sample was created for //BUILD 2014 and is not to be used in production. We plan on adding a true cross platform mapping layer in the future. For those interested in binding to our iOS library in .Net using Xamarin, this code is a good guide and will build a bindling.dll file for your Xamarin for iOS project for use with Xamarin.
-
-##### NOTE 
-
-In the future we will update this sample to include other ADAL libraries, such as Android, as well as create a more robust mapping layer. At the moment, we are using the binding file directly to allow Xamarin developers on iOS to use our library. 
-
-###**CALL FOR PARTICIPATION** 
-
-We would love to get the Xamarin community involvement to help with the following:
-
-* Create a binding for ADAL for Android
-
-* Create a mapping layer between the binding files for iOS and Android to make the library useful to Xamarin developers regardless of platform they are building for.
-
-Thanks - @brandwe
+This sample shows how to build a Xamarin binding to our native ADAL for iOS library. This is a sample and is not to be used in production. For those interested in binding to our iOS library in .Net using Xamarin, this code is a good guide and will build a bindling.dll file for your Xamarin for iOS project for use with Xamarin.
 
 ## Quick Start
 
