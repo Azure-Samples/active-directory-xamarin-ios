@@ -25,63 +25,6 @@ using MonoTouch.UIKit;
 
 namespace Binding
 {
-	// The first step to creating a binding is to add your native library ("libNativeLibrary.a")
-	// to the project by right-clicking (or Control-clicking) the folder containing this source
-	// file and clicking "Add files..." and then simply select the native library (or libraries)
-	// that you want to bind.
-	//
-	// When you do that, you'll notice that MonoDevelop generates a code-behind file for each
-	// native library which will contain a [LinkWith] attribute. MonoDevelop auto-detects the
-	// architectures that the native library supports and fills in that information for you,
-	// however, it cannot auto-detect any Frameworks or other system libraries that the
-	// native library may depend on, so you'll need to fill in that information yourself.
-	//
-	// Once you've done that, you're ready to move on to binding the API...
-	//
-	//
-	// Here is where you'd define your API definition for the native Objective-C library.
-	//
-	// For example, to bind the following Objective-C class:
-	//
-	//     @interface Widget : NSObject {
-	//     }
-	//
-	// The C# binding would look like this:
-	//
-	//     [BaseType (typeof (NSObject))]
-	//     interface Widget {
-	//     }
-	//
-	// To bind Objective-C properties, such as:
-	//
-	//     @property (nonatomic, readwrite, assign) CGPoint center;
-	//
-	// You would add a property definition in the C# interface like so:
-	//
-	//     [Export ("center")]
-	//     PointF Center { get; set; }
-	//
-	// To bind an Objective-C method, such as:
-	//
-	//     -(void) doSomething:(NSObject *)obj atIndex:(NSInteger)index;
-	//
-	// You would add a method definition to the C# interface like so:
-	//
-	//     [Export ("doSomething:atIndex:")]
-	//     void DoSomething (NSObject obj, int index);
-	//
-	// Objective-C "constructors" such as:
-	//
-	//     -(id)initWithElmo:(ElmoMuppet *)elmo;
-	//
-	// Can be bound as:
-	//
-	//     [Export ("initWithElmo:")]
-	//     IntPtr Constructor (ElmoMuppet elmo);
-	//
-	// For more information, see http://docs.xamarin.com/ios/advanced_topics/binding_objive-c_libraries
-	//
-
 	[Model]
 	public partial interface ADTokenCacheStoring {
 
@@ -324,142 +267,122 @@ namespace Binding
 
 	public delegate void LogCallback(ADAL_LOG_LEVEL logLevel, string message, string additionalInformation, int errorCode);
 
-		[BaseType (typeof (NSObject))]
-		public partial interface ADLogger {
+	[BaseType (typeof (NSObject))]
+	public partial interface ADLogger {
 
-			[Static, Export ("level")]
-			ADAL_LOG_LEVEL Level { set; }
+		[Static, Export ("level")]
+		ADAL_LOG_LEVEL Level { set; }
 
-			[Static, Export ("getLevel")]
-			ADAL_LOG_LEVEL GetLevel { get; }
+		[Static, Export ("getLevel")]
+		ADAL_LOG_LEVEL GetLevel { get; }
 
-			[Static, Export ("log:message:errorCode:additionalInformation:")]
-			void Log (ADAL_LOG_LEVEL logLevel, string message, int errorCode, string additionalInformation);
+		[Static, Export ("log:message:errorCode:additionalInformation:")]
+		void Log (ADAL_LOG_LEVEL logLevel, string message, int errorCode, string additionalInformation);
 
-			[Static, Export ("logToken:tokenType:expiresOn:correlationId:")]
-			void LogToken (string token, string tokenType, NSDate expiresOn, Guid correlationId);
+		[Static, Export ("logToken:tokenType:expiresOn:correlationId:")]
+		void LogToken (string token, string tokenType, NSDate expiresOn, Guid correlationId);
 
-			[Static, Export ("logCallBack")]
-			LogCallback LogCallBack { set; }
+		[Static, Export ("logCallBack")]
+		LogCallback LogCallBack { set; }
 
-			[Static, Export ("getLogCallBack")]
-			LogCallback GetLogCallBack { get; }
+		[Static, Export ("getLogCallBack")]
+		LogCallback GetLogCallBack { get; }
 
-			[Static, Export ("nSLogging")]
-			bool NSLogging { set; }
+		[Static, Export ("nSLogging")]
+		bool NSLogging { set; }
 
-			[Static, Export ("getNSLogging")]
-			bool GetNSLogging { get; }
+		[Static, Export ("getNSLogging")]
+		bool GetNSLogging { get; }
 
-			[Static, Export ("adalId")]
-			NSDictionary AdalId { get; }
-		}
+		[Static, Export ("adalId")]
+		NSDictionary AdalId { get; }
+	}
 		
 	public delegate void ADDiscoveryCallback(bool validated, ADAuthenticationError error);
 
-		[BaseType (typeof (NSObject))]
-		public partial interface ADInstanceDiscovery {
+	[BaseType (typeof (NSObject))]
+	public partial interface ADInstanceDiscovery {
 
-			[Export ("validatedAuthorities")]
-			NSSet ValidatedAuthorities { [Bind ("getValidatedAuthorities")] get; }
+		[Export ("validatedAuthorities")]
+		NSSet ValidatedAuthorities { [Bind ("getValidatedAuthorities")] get; }
 
-			[Static, Export ("sharedInstance")]
-			ADInstanceDiscovery SharedInstance { get; }
+		[Static, Export ("sharedInstance")]
+		ADInstanceDiscovery SharedInstance { get; }
 
-			[Export ("validateAuthority:correlationId:completionBlock:")]
-			void ValidateAuthority (string authority, Guid correlationId, ADDiscoveryCallback completionBlock);
+		[Export ("validateAuthority:correlationId:completionBlock:")]
+		void ValidateAuthority (string authority, Guid correlationId, ADDiscoveryCallback completionBlock);
 
-			[Static, Export ("canonicalizeAuthority:")]
-			string CanonicalizeAuthority (string authority);
-
-
-		}
-		
-
-		[BaseType (typeof (NSObject))]
-		public partial interface ADPersistentTokenCacheStore : ADTokenCacheStoring {
-
-			[Export ("initWithLocation:")]
-			IntPtr Constructor (string cacheLocation);
-
-			[Export ("removeItem:error:")]
-			void RemoveItem (ADTokenCacheStoreItem item, out ADAuthenticationError error);
-
-			[Export ("cacheLocation")]
-			string CacheLocation { get; }
-
-			[Export ("ensureArchived:")]
-			bool EnsureArchived (out ADAuthenticationError error);
-
-			[Export ("addInitialCacheItems")]
-			bool AddInitialCacheItems { get; }
-
-		}
-	public enum ADCredentialsType{
-		/*!
-     The SDK determines automatically the most suitable option, optimized for user experience.
-     E.g. it may invoke another application for a single sign on, if such application is present.
-     This is the default option.
-     */
-		AD_CREDENTIALS_AUTO,
-
-		/*!
-     The SDK will present an embedded dialog within the application. It will not invoke external
-     application or browser.
-     */
-		AD_CREDENTIALS_EMBEDDED,
+		[Static, Export ("canonicalizeAuthority:")]
+		string CanonicalizeAuthority (string authority);
 
 	}
 
+	[BaseType (typeof (NSObject))]
+	public partial interface ADPersistentTokenCacheStore : ADTokenCacheStoring {
 
-		[BaseType (typeof (NSObject))]
-		public partial interface ADAuthenticationSettings {
+		[Export ("initWithLocation:")]
+		IntPtr Constructor (string cacheLocation);
 
-			[Static, Export ("sharedInstance")]
-			ADAuthenticationSettings SharedInstance { get; }
+		[Export ("removeItem:error:")]
+		void RemoveItem (ADTokenCacheStoreItem item, out ADAuthenticationError error);
 
-			[Export ("credentialsType")]
-			ADCredentialsType CredentialsType { get; set; }
+		[Export ("cacheLocation")]
+		string CacheLocation { get; }
 
-			[Export ("requestTimeOut")]
-			int RequestTimeOut { get; set; }
+		[Export ("ensureArchived:")]
+		bool EnsureArchived (out ADAuthenticationError error);
 
-			[Export ("expirationBuffer")]
-			uint ExpirationBuffer { get; set; }
+		[Export ("addInitialCacheItems")]
+		bool AddInitialCacheItems { get; }
 
-			[Export ("enableFullScreen")]
-			bool EnableFullScreen { get; set; }
-
-			[Export ("dispatchQueue")]
-			NSObject DispatchQueue { get; set; }
-
-			[Export ("defaultTokenCacheStore")]
-			ADTokenCacheStoring DefaultTokenCacheStore { get; set; }
 	}
-		
+
+	[BaseType (typeof (NSObject))]
+	public partial interface ADAuthenticationSettings {
+
+		[Static, Export ("sharedInstance")]
+		ADAuthenticationSettings SharedInstance { get; }
+
+		[Export ("credentialsType")]
+		ADCredentialsType CredentialsType { get; set; }
+
+		[Export ("requestTimeOut")]
+		int RequestTimeOut { get; set; }
+
+		[Export ("expirationBuffer")]
+		uint ExpirationBuffer { get; set; }
+
+		[Export ("enableFullScreen")]
+		bool EnableFullScreen { get; set; }
+
+		[Export ("dispatchQueue")]
+		NSObject DispatchQueue { get; set; }
+
+		[Export ("defaultTokenCacheStore")]
+		ADTokenCacheStoring DefaultTokenCacheStore { get; set; }
+    }
+
 	public delegate void ADParametersCompletion(ADAuthenticationParameters parameters, ADAuthenticationError error);
-		[BaseType (typeof (NSObject))]
-		public partial interface ADAuthenticationParameters {
 
-			[Export ("authority")]
-			string Authority { get; }
+	[BaseType (typeof (NSObject))]
+	public partial interface ADAuthenticationParameters {
 
-			[Export ("resource")]
-			string Resource { get; }
+		[Export ("authority")]
+		string Authority { get; }
 
-			[Export ("extractedParameters")]
-			NSDictionary ExtractedParameters { [Bind ("getExtractedParameters")] get; }
+		[Export ("resource")]
+		string Resource { get; }
 
-			[Static, Export ("parametersFromResponse:error:")]
+		[Export ("extractedParameters")]
+		NSDictionary ExtractedParameters { [Bind ("getExtractedParameters")] get; }
+
+		[Static, Export ("parametersFromResponse:error:")]
 		ADAuthenticationParameters ParametersFromResponse (NSUrlResponse response, out ADAuthenticationError error);
 
-			[Static, Export ("parametersFromResponseAuthenticateHeader:error:")]
-			ADAuthenticationParameters ParametersFromResponseAuthenticateHeader (string authenticateHeader, out ADAuthenticationError error);
+		[Static, Export ("parametersFromResponseAuthenticateHeader:error:")]
+		ADAuthenticationParameters ParametersFromResponseAuthenticateHeader (string authenticateHeader, out ADAuthenticationError error);
 
-			[Static, Export ("parametersFromResourceUrl:completionBlock:")]
-			void ParametersFromResourceUrl (NSUrl resourceUrl, ADParametersCompletion completion);
-
+		[Static, Export ("parametersFromResourceUrl:completionBlock:")]
+		void ParametersFromResourceUrl (NSUrl resourceUrl, ADParametersCompletion completion);
 	}
-		
 }
-
