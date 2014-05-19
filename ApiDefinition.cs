@@ -23,9 +23,10 @@ using MonoTouch.ObjCRuntime;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
-namespace Binding
+namespace adalbinding
 {
-	[Model]
+	[Model, Protocol]
+	[BaseType(typeof(NSObject))]
 	public partial interface ADTokenCacheStoring {
 
 		[Export ("allItems")]
@@ -46,15 +47,17 @@ namespace Binding
 		[Export ("removeAll")]
 		void RemoveAll ();
 
-		[Field ("ADAuthenticationErrorDomain")]
+		[Field ("ADAuthenticationErrorDomain", "__Internal")]
 		NSString ADAuthenticationErrorDomain { get; }
 
-		[Field ("ADInvalidArgumentDomain")]
+		[Field ("ADInvalidArgumentDomain", "__Internal")]
 		NSString ADInvalidArgumentDomain { get; }
 
-		[Field ("ADUnauthorizedResponseErrorDomain")]
+		[Field ("ADUnauthorizedResponseErrorDomain", "__Internal")]
 		NSString ADUnauthorizedResponseErrorDomain { get; }
 	}
+
+	public interface IADTokenCacheStoring {}
 
 	[BaseType (typeof (NSError))]
 	public partial interface ADAuthenticationError {
@@ -238,7 +241,7 @@ namespace Binding
 		bool ValidateAuthority { get; set; }
 
 		[Export ("tokenCacheStore")]
-		ADTokenCacheStoring TokenCacheStore { get; set; }
+		IADTokenCacheStoring TokenCacheStore { get; set; }
 
 		[Export ("correlationId")]
 		Guid CorrelationId { get; set; }
@@ -359,7 +362,7 @@ namespace Binding
 		NSObject DispatchQueue { get; set; }
 
 		[Export ("defaultTokenCacheStore")]
-		ADTokenCacheStoring DefaultTokenCacheStore { get; set; }
+		IADTokenCacheStoring DefaultTokenCacheStore { get; set; }
     }
 
 	public delegate void ADParametersCompletion(ADAuthenticationParameters parameters, ADAuthenticationError error);

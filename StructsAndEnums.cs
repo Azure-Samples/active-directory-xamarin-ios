@@ -19,9 +19,8 @@
 
 using System;
 
-namespace Binding
+namespace adalbinding
 {
-
 	public enum ADAuthenticationResultStatus {
 		SUCCEEDED,
 		USER_CANCELLED,
@@ -71,15 +70,6 @@ namespace Binding
 		OSLittleEndian,
 		OSBigEndian
 	}
-
-//	public enum Mach_port_options_ptr_t    {
-//		GUARD_EXC_DESTROY = 1U << 0,
-//		GUARD_EXC_MOD_REFS = 1U << 1,
-//		GUARD_EXC_SET_CONTEXT = 1U << 2,
-//		GUARD_EXC_UNGUARDED = 1U << 3,
-//		GUARD_EXC_INCORRECT_GUARD = 1U << 4
-//	}
-
 
 	public enum Filesec_property_t   {
 		ILESEC_OWNER = 1,
@@ -180,5 +170,19 @@ namespace Binding
 		UNAUTHORIZED = 401
 	}
 
-}
+	public enum ADCredentialsType{
+		/*!
+     The SDK determines automatically the most suitable option, optimized for user experience.
+     E.g. it may invoke another application for a single sign on, if such application is present.
+     This is the default option.
+     */
+		AD_CREDENTIALS_AUTO,
 
+		/*!
+     The SDK will present an embedded dialog within the application. It will not invoke external
+     application or browser.
+     */
+		AD_CREDENTIALS_EMBEDDED,
+
+	}
+}
