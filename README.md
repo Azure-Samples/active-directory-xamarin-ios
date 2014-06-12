@@ -30,7 +30,7 @@ Before building the library, let's find out where the compiled library files wil
 
 Now build the library in two flavors: ARM and i386. If the current platform is the "iOS Device" (or the name of a device that is connected to the Mac), then you'll be building for ARM. If the current platform is one of the the iOS Simulators, then it will build for i386. Press Command+B to build for the current platform. Then, select a different platform (if the selected platform was a simulator, choose an iOS Device; if the device, choose any simulator - see image below) and build it again.
 
-![Building for multiple platforms](002-BuildingForMultiplePlatforms.png)
+![Building for multiple platforms](images/002-BuildingForMultiplePlatforms.png)
 
 You now should have two files called libADALiOS.a in your computer. It's time to go to the command line (terminal) to combine those two libraries into a "fat" or "universal" library, as described in [Xamarin docs for linking native libraries](http://docs.xamarin.com/guides/ios/advanced_topics/native_interop/). We want to do that so that we'll be able to use the DLL on both the simulators (for easy testing) and on real devices (for production).
 
