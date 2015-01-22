@@ -23,7 +23,7 @@ using MonoTouch.ObjCRuntime;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
-namespace ADALBinding
+namespace adalbinding
 {
 	// @protocol ADTokenCacheStoring
 	[Protocol, Model]
@@ -54,7 +54,6 @@ namespace ADALBinding
 		[Export ("removeAllWithError:")]
 		void RemoveAllWithError (out ADAuthenticationError error);
 	}
-
 
 	public interface IADTokenCacheStoring {}
 

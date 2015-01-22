@@ -19,7 +19,7 @@
 
 using System;
 
-namespace ADALBinding
+namespace adalbinding
 {
 	public enum ADAuthenticationResultStatus {
 		AD_SUCCEEDED,
@@ -140,8 +140,8 @@ namespace ADALBinding
 	}
 
 	public enum ADAL_LOG_LEVEL   {
-		ADAL_LOG_LEVEL_NO_LOG,
-		ADAL_LOG_LEVEL_ERROR,
+		ADAL_LOG_LEVEL_NO_LOG,//Available to fully disable logging 
+        ADAL_LOG_LEVEL_ERROR,//Default 
 		ADAL_LOG_LEVEL_WARN,
 		ADAL_LOG_LEVEL_INFO,
 		ADAL_LOG_LEVEL_VERBOSE,
