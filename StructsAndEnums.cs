@@ -22,16 +22,21 @@ using System;
 namespace adalbinding
 {
 	public enum ADAuthenticationResultStatus {
-		SUCCEEDED,
-		USER_CANCELLED,
-		FAILED
+		AD_SUCCEEDED,
+		AD_USER_CANCELLED,
+		AD_FAILED
 	};
 
 	public enum ADPromptBehavior {
-		PROMPT_AUTO,
-		PROMPT_NEVER,
-		PROMPT_ALWAYS
+		AD_PROMPT_AUTO,
+		AD_PROMPT_ALWAYS,
+		AD_PROMPT_REFRESH_SESSION
 	};
+
+	public enum ADAssertionType {
+		AD_SAML1_1,
+		AD_SAML2
+	}
 
 	public enum Idtype_t {
 		P_ALL,
@@ -135,12 +140,12 @@ namespace adalbinding
 	}
 
 	public enum ADAL_LOG_LEVEL   {
-		ADAL_LOG_LEVEL_NO_LOG,//Available to fully disable logging
-		ADAL_LOG_LEVEL_ERROR,//Default
+		ADAL_LOG_LEVEL_NO_LOG,//Available to fully disable logging 
+        ADAL_LOG_LEVEL_ERROR,//Default 
 		ADAL_LOG_LEVEL_WARN,
 		ADAL_LOG_LEVEL_INFO,
 		ADAL_LOG_LEVEL_VERBOSE,
-		ADAL_LOG_LAST = ADAL_LOG_LEVEL_VERBOSE,
+		ADAL_LOG_LAST = ADAL_LOG_LEVEL_VERBOSE
 	}
 
 	public enum ADErrorCode   {
