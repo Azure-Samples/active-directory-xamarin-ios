@@ -1,11 +1,10 @@
 ---
-services:
-platforms:
-author: azure
+services: active-directory
+platforms: ios
+author: dstrockis
 ---
 
 # Using ADAL for Objective-C in Xamarin using bindings
-
 
 This sample shows how to build a Xamarin binding to our native ADAL for iOS library. This is a sample and is not to be used in production. For those interested in binding to our iOS library in .Net using Xamarin, this code is a good guide and will build a bindling.dll file for your Xamarin for iOS project for use with Xamarin.
 
