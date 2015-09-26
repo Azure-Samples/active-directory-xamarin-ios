@@ -1,7 +1,7 @@
 ---
 services: active-directory
 platforms: ios
-author: dstrockis
+author: brandwe
 ---
 
 # Using ADAL for Objective-C in Xamarin using bindings
